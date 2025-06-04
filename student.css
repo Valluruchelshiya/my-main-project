@@ -1,0 +1,387 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap");
+
+* {
+  font-family: "Ubuntu", sans-serif;
+}
+body{
+    height: 100%;
+    margin: 0;
+    background-color: aliceblue !important;
+}
+a{
+    text-decoration: none;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    padding: 10px;
+    height: 60px;
+}
+
+.navbar a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+}
+
+.navbar a:hover {
+    color: #007bff;
+}
+/* .profile{
+    position: relative;
+    top: 0;
+    margin-top: 0;
+    width: 300px;
+    background-color:white;
+    height: 1000px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px ;
+}
+.profile_info {
+    text-align: left;
+    line-height: 3;
+    margin-left: 40px;
+    margin-top: 70px;
+} */
+ /* Profile section styling */
+ 
+ * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+    display: flex;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #1a1a2e;
+    color: white;
+    min-height: 100vh;
+    transition: width 0.3s ease;
+    overflow-x: hidden;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.sidebar.collapsed {
+    width: 70px;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.3s, color 0.3s;
+}
+
+.sidebar a i {
+    min-width: 30px;
+    font-size: 18px;
+}
+
+.sidebar a span {
+    transition: opacity 0.3s;
+}
+
+.sidebar.collapsed a span {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebar a:hover {
+    background-color: #16213e;
+    color: #e94560;
+}
+
+.toggle-btn {
+    position: fixed;
+    top: 20px;
+    left: 260px;
+    background-color: #e94560;
+    color: white;
+    padding: 10px 15px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: left 0.3s ease;
+    z-index: 100;
+}
+
+.sidebar.collapsed ~ .toggle-btn {
+    left: 80px;
+}
+
+.content {
+    margin-left: 250px;
+    padding: 40px;
+    transition: margin-left 0.3s ease;
+    width: 100%;
+}
+
+.sidebar.collapsed ~ .content {
+    margin-left: 70px;
+}
+
+.profile,
+.attendance {
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.profile h3,
+.attendance h3 {
+    border-bottom: 2px solid #e94560;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+}
+
+.profile p,
+.attendance li {
+    margin: 10px 0;
+    font-size: 16px;
+    list-style: none;
+}
+
+.low {
+    color: red;
+}
+
+.medium {
+    color: orange;
+}
+
+.high {
+    color: green;
+}
+
+.profile {
+    width: 2000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.profile h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.profile_info {
+    font-size: 18px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.profile_info p {
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+.profile_info p span {
+    font-weight: bold;
+    color: #222;
+}
+
+.profile hr {
+    border: 1px solid #ddd;
+    margin: 15px 0;
+}
+
+.profile .profile_info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.profile .profile_info ul p {
+    font-size: 16px;
+    color: #333;
+}
+
+.profile .profile_info ul p span {
+    color: #000;
+    font-weight: bold;
+}
+
+.page{
+    display: flex;
+}
+.attendance{
+    margin-left: 30px;
+    font-size: 25px;
+}
+.box{
+    height: 300px;
+    width: 180px;
+    background-color: white;
+    border-radius: 30px;
+}
+.box-p1{
+    font-size: 20px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-left: 20px;
+    margin-top: 50px;
+}
+.box .percent{
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+.box .percent svg{
+    position: relative;
+    width: 150px;
+    height: 150px;
+}
+/* .box .percent svg circle{
+    width: 150px;
+    height: 150px;
+    fill: none;
+    stroke-width: 6;
+    stroke: #000;
+    transform: translate(5px,5px);
+    stroke-dasharray: 440;
+    stroke-dashoffset: 440;
+    stroke-linecap: round;
+}
+.box .percent svg circle:nth-child(1){
+    stroke-dasharray: 251.2;
+    stroke-dashoffset: 0;
+    stroke: #f3f3f3;
+}
+.box .percent svg circle:nth-child(2){
+    stroke-dasharray: ;
+    stroke-dashoffset: ;
+    stroke: rgb(138, 194, 229);
+} */
+.box .percent .number{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+}
+.box .percent .number h2{
+    font-size: 25px;
+    margin-left: 15px;
+    margin-top: 15px;
+}
+.box .percent .number h2 span{
+    font-size: 20px;
+}
+.icon{
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+}
+#icon1{
+    background-color: lightskyblue;
+}
+#icon2{
+    background-color: lightcoral;
+}
+#icon3{
+    background-color: rgb(243, 179, 60);
+}
+#icon4{
+    background-color: rgb(246, 198, 57);
+}
+i{
+    margin-left: 5px;
+    margin-top: 8px;
+}
+.boxes{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 50px;
+    gap: 80px;
+
+}
+.box:hover{
+    background-color: skyblue;
+}
+.rect{
+    height: 510px;
+    width: 980px;
+    background-color: white;
+    border-radius: 30px;
+    margin-left: 40px;
+}
+.chart-container{
+    width: 400px;
+}
+.programming-stats {
+   display: flex;
+   align-items: center;
+   gap: 24px;
+   margin: 0 auto; 
+   font-size: 30px;
+   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    box-shadow: 0 4px 12px -2px rgba(0,0,0,0.3);
+    border-radius: 20px;
+    padding: 30px;
+    color: #023047;
+    transition: all 400ms ease;
+}
+.programming-stats .details ul{
+    list-style: none;
+    padding: 0;
+}
+.programming-stats .details ul li{
+    font-size: 16px;
+    margin: 12px 0;
+}
+.programming-stats .details .percentage{
+    color: rgb(30, 124, 119);
+    font-weight: 700;
+}
+/* Base style for all circles */
+.percent svg circle {
+    stroke-width: 6;
+    fill: none;
+}
+
+/* Background circle (unchanged part) */
+.percent svg circle:nth-child(1) {
+    stroke: #f3f3f3; /* Light grey for the unfilled part */
+}
+
+/* Web Technology circle (filled part) */
+#icon1 ~ .percent svg circle:nth-child(2) {
+    stroke: #4caf50; /* Green */
+}
+
+/* Machine Learning circle (filled part) */
+#icon2 ~ .percent svg circle:nth-child(2) {
+    stroke: #ff9800; /* Orange */
+}
+
+/* Discrete Mathematics circle (filled part) */
+#icon3 ~ .percent svg circle:nth-child(2) {
+    stroke: #2196f3; /* Blue */
+}
+
+/* Drafting Graphics circle (filled part) */
+#icon4 ~ .percent svg circle:nth-child(2) {
+    stroke: #f44336; /* Red */
+}

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Live Code Room</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body class="bg-gray-900 text-white h-screen flex flex-col">
+  <!-- Header -->
+  <header class="bg-gray-800 p-4 flex justify-between items-center">
+    <h1 class="text-xl font-semibold">Live Code Room</h1>
+    <div class="flex items-center gap-4">
+      <div class="text-sm text-green-400">👥 2 People Online</div>
+      <button onclick="toggleChatbox()" title="Toggle AI Chat" class="text-white hover:text-blue-400 focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex flex-1 overflow-hidden">
+    <!-- Left: Coding Panel -->
+    <div class="w-2/3 p-4 flex flex-col">
+      <div class="mb-4">
+        <h2 id="problem-title" class="text-xl font-semibold">Loading...</h2>
+        <p id="problem-desc" class="text-sm text-gray-300 whitespace-pre-line">Please wait...</p>
+      </div>
+
+      <label class="text-sm mt-2" for="language">Language:</label>
+      <select id="language" class="bg-gray-700 rounded p-2 text-white mb-2">
+        <option value="71" selected>Python</option>
+        <option value="63">JavaScript</option>
+        <option value="62">Java</option>
+      </select>
+
+      <textarea id="code" class="flex-1 bg-gray-800 rounded p-4 font-mono text-sm mb-4 resize-none" placeholder="# Start coding here..."></textarea>
+
+      <div class="grid grid-cols-2 gap-4 mb-2">
+        <div>
+          <h3 class="font-semibold mb-1">Input:</h3>
+          <pre id="input-display" class="bg-gray-800 p-2 rounded text-green-400 h-24 overflow-auto"></pre>
+        </div>
+        <div>
+          <h3 class="font-semibold mb-1">Output:</h3>
+          <pre id="output" class="bg-gray-800 p-2 rounded text-green-400 h-24 overflow-auto">Waiting for execution...</pre>
+        </div>
+      </div>
+
+      <button onclick="runCode()" class="bg-blue-600 hover:bg-blue-700 rounded px-4 py-2 w-fit">▶ Run Code</button>
+    </div>
+
+    <!-- Right: Chat Sidebar -->
+    <div class="w-1/3 border-l border-gray-700 flex flex-col p-4">
+      <div class="mb-4">
+        <h3 class="font-semibold mb-2">Online</h3>
+        <div class="text-sm space-y-1">
+          <div class="flex items-center gap-2">
+            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+            <span>You</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <span>Teammate</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat Box -->
+      <div class="flex-1 flex flex-col">
+        <div id="chatBox" class="flex-1 overflow-y-auto bg-gray-800 p-2 rounded mb-2 text-sm space-y-2">
+          <div><strong>You:</strong> Hey! Ready to solve this?</div>
+          <div><strong>Teammate:</strong> Yep! Let’s go 🚀</div>
+        </div>
+        <form id="chatForm" class="flex gap-2" onsubmit="handleChat(event)">
+          <input id="chatInput" type="text" class="flex-1 px-3 py-1 rounded bg-gray-700 outline-none text-white" placeholder="Type a message..." required />
+          <button class="bg-blue-600 px-4 py-1 rounded hover:bg-blue-700">Send</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- AI Chatbox (Hidden by Default) -->
+  <div id="ai-chatbox" class="fixed top-0 right-0 h-full w-full sm:w-1/3 bg-white text-gray-800 flex flex-col transform translate-x-full transition-transform duration-300 ease-in-out shadow-lg z-50">
+    <div class="bg™bg-gray-100 p-4 flex justify-between items-center border-b border-gray-200">
+      <h2 class="text-lg font-semibold">AI Coding Assistant</h2>
+      <button onclick="toggleChatbox()" class="text-gray-600 hover:text-gray-800 focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div id="ai-chat-messages" class="flex-1 overflow-y-auto p-4 flex flex-col gap-2 bg-gray-50">
+      <div class="ai-message">👋 Ask me anything about coding!</div>
+    </div>
+    <div class="p-4 border-t border-gray-200 bg-gray-100">
+      <div class="flex gap-2">
+        <input type="text" id="ai-chat-input" class="flex-1 px-3 py-2 rounded bg-white border border-gray-300 text-gray-800 placeholder-gray-500 focus:outline-none focus:border-blue-500" placeholder="Ask for help...">
+        <button onclick="sendAIMessage()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    #ai-chatbox {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .ai-message, .user-message {
+      max-width: 80%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      position: relative;
+      margin-bottom: 10px;
+    }
+
+    .user-message {
+      background: #6ab0ff;
+      color: #fff;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    .ai-message {
+      background: #e9ecef;
+      color: #333;
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+      white-space: pre-wrap;
+    }
+
+    .typing-indicator {
+      background: #e9ecef;
+      padding: 10px 14px;
+      border-radius: 10px;
+      max-width: 80%;
+      align-self: flex-start;
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .ai-message::after, .user-message::after {
+      content: attr(data-timestamp);
+      font-size: 0.7rem;
+      color: #999;
+      position: absolute;
+      bottom: -16px;
+      right: 8px;
+      opacity: 0.8;
+    }
+
+    .ai-message::after {
+      left: 8px;
+      right: auto;
+    }
+  </style>
+
+  <script>
+    // Mock Problem Set
+    const problems = {
+      1: {
+        title: "Reverse a String",
+        description: "Write a function to reverse a given string.\nExample: input = 'hello' → output = 'olleh'",
+        input: "hello",
+        expectedOutput: "olleh"
+      },
+      2: {
+        title: "Sum of Two Numbers",
+        description: "Write a program that reads two numbers and prints their sum.",
+        input: "3 5",
+        expectedOutput: "8"
+      }
+    };
+
+    // Load Problem
+    const problemId = 1; // Change to 2 for another problem
+    const problem = problems[problemId];
+    document.getElementById("problem-title").textContent = problem.title;
+    document.getElementById("problem-desc").textContent = problem.description;
+    document.getElementById("input-display").textContent = problem.input;
+
+    // Run Code Function
+    async function runCode() {
+      const code = document.getElementById("code").value;
+      const language_id = document.getElementById("language").value;
+      const stdin = problem.input;
+      const expectedOutput = problem.expectedOutput.trim();
+      document.getElementById("output").textContent = "Running...";
+
+      const response = await fetch("https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=false&wait=true", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
+          "x-rapidapi-key": "7892980f33msh5120d2d04bd8282p14a55ajsnac969c62a616" // Replace with your real key
+        },
+        body: JSON.stringify({
+          source_code: code,
+          language_id: language_id,
+          stdin: stdin
+        })
+      });
+
+      const result = await response.json();
+      const actualOutput = (result.stdout || result.stderr || result.compile_output || "No output").trim();
+      const outputBox = document.getElementById("output");
+
+      if (actualOutput === expectedOutput) {
+        outputBox.textContent = `${actualOutput}\n✅ Test Case Passed!`;
+      } else {
+        outputBox.textContent = `${actualOutput}\n❌ Test Case Failed!\nExpected: ${expectedOutput}`;
+      }
+    }
+
+    // Handle Teammate Chat
+    function handleChat(e) {
+      e.preventDefault();
+      const input = document.getElementById("chatInput");
+      const msg = input.value.trim();
+      if (msg) {
+        const div = document.createElement("div");
+        div.innerHTML = `<strong>You:</strong> ${msg}`;
+        document.getElementById("chatBox").appendChild(div);
+        input.value = '';
+        document.getElementById("chatBox").scrollTop = document.getElementById("chatBox").scrollHeight;
+      }
+    }
+
+    // AI Chatbox Logic
+    const geminiApiKey = "AIzaSyBGywOEBpWVB6zhSS2kO9k2ie_GZS8TQwc"; // Replace with your Gemini API key securely
+
+    function toggleChatbox() {
+      const chatbox = document.getElementById("ai-chatbox");
+      if (chatbox.classList.contains("translate-x-full")) {
+        chatbox.classList.remove("translate-x-full");
+        chatbox.classList.add("translate-x-0");
+        document.getElementById("ai-chat-input").focus();
+      } else {
+        chatbox.classList.remove("translate-x-0");
+        chatbox.classList.add("translate-x-full");
+      }
+    }
+
+    async function sendAIMessage() {
+      const input = document.getElementById("ai-chat-input");
+      const userMessage = input.value.trim();
+      if (!userMessage) return;
+
+      // Add user message
+      addAIChat("user", userMessage);
+      input.value = "";
+
+      // Add typing indicator
+      addAITypingIndicator();
+
+      // Prepare prompt
+      const prompt = `You are a coding assistant. The user asked: "${userMessage}". Provide a clear and concise response, focusing on coding-related advice or explanations. If applicable, include code examples in markdown code blocks (\\\).`;
+
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{ text: prompt }]
+            }],
+            generationConfig: {
+              temperature: 0.7,
+              maxOutputTokens: 500
+            }
+          })
+        });
+
+        // Remove typing indicator
+        removeAITypingIndicator();
+
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => ({}));
+          let errorMessage = `Gemini API failed: ${res.status} - ${res.statusText}`;
+          if (res.status === 403) {
+            errorMessage = "Invalid or unauthorized Gemini API key. Please check your key.";
+          } else if (res.status === 429) {
+            errorMessage = "Gemini API quota exceeded. Try again later.";
+          } else if (res.status === 400) {
+            errorMessage = `Bad request: ${errorData.error?.message || 'Please check the input format.'}`;
+          }
+          throw new Error(errorMessage);
+        }
+
+        const data = await res.json();
+        const aiText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't process that.";
+        
+        // Parse markdown safely
+        const formattedText = marked.parse(aiText, { breaks: true });
+        addAIChat("ai", formattedText, true);
+      } catch (error) {
+        console.error("Error:", error);
+        removeAITypingIndicator();
+        addAIChat("ai", `❌ Error: ${error.message}`);
+      }
+    }
+
+    function addAIChat(sender, message, isHtml = false) {
+      const chatBox = document.getElementById("ai-chat-messages");
+      const div = document.createElement("div");
+      div.className = `message ${sender === "user" ? "user-message" : "ai-message"}`;
+      div.setAttribute("data-timestamp", new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+      if (isHtml) {
+        div.innerHTML = message;
+      } else {
+        div.textContent = message;
+      }
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function addAITypingIndicator() {
+      const chatBox = document.getElementById("ai-chat-messages");
+      const div = document.createElement("div");
+      div.className = "typing-indicator";
+      div.id = "ai-typing-indicator";
+      div.textContent = "AI is typing...";
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function removeAITypingIndicator() {
+      const typingIndicator = document.getElementById("ai-typing-indicator");
+      if (typingIndicator) {
+        typingIndicator.remove();
+      }
+    }
+
+    // Enable Enter key to send AI message
+    document.getElementById("ai-chat-input").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        sendAIMessage();
+      }
+    });
+  </script>
+</body>
+</html>

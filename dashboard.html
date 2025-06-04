@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin/Placement Panel</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    .sidebar {
+      min-height: 100vh;
+      background-color: #343a40;
+      color: white;
+      padding: 20px;
+    }
+
+    .sidebar h3 {
+      margin-bottom: 30px;
+    }
+
+    .sidebar a {
+      color: #ffffff;
+      display: block;
+      margin: 15px 0;
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .sidebar a:hover {
+      color: #ffc107;
+    }
+
+    .section {
+      margin: 40px 20px;
+    }
+
+    .card {
+      margin-top: 15px;
+    }
+
+    .table {
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-2 sidebar">
+        <h3>Admin Panel</h3>
+        <a href="#metrics">Skill Metrics</a>
+        <a href="adminreports.html">Leaderboard</a>
+        <a href="schedule.html">Readiness Index</a>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-md-10">
+        <div id="metrics" class="section">
+          <h2>Skill Metrics</h2>
+          <p>Overview of aggregate skill metrics of students.</p>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Skill Distribution</h5>
+              <p class="card-text">Communication: 82%, Coding: 91%, Aptitude: 76%</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="leaderboard" class="section">
+          <h2>Coding Leaderboard</h2>
+          <p>Top performers in recent coding contests.</p>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Student</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Aarav Mehta</td>
+                <td>980</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Riya Kapoor</td>
+                <td>950</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Dev Sharma</td>
+                <td>940</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div id="readiness" class="section">
+          <h2>Placement Readiness Index</h2>
+          <p>Student readiness percentage based on test scores, attendance, and profile completion.</p>
+          <div class="progress">
+            <div class="progress-bar bg-success" role="progressbar" style="width: 81%" aria-valuenow="81" aria-valuemin="0" aria-valuemax="100">81%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // You can add interactivity here in the future.
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="attendence.css">
+    <style>
+        body{
+    margin: 0;
+    padding: 0;
+}
+.side{
+    display: flex;
+}
+.side-bar{
+    background-color:rgb(1, 1, 30);
+    width: 140px;
+    height: 100vh;
+}
+.sub-div{
+    background-color:rgb(48, 200, 255);
+    width: 20px;
+    height: 100vh;
+    margin-left: 140px;
+    margin-top: 0px;
+    position: absolute;
+    top: 0;
+}
+.days{
+    /* margin-left:50px; */
+}
+.box{
+    height: 140px;
+    width:140px;
+    border: 2px solid navy;
+    border-radius: 20px;
+    /* display: inline-block; */
+    justify-content: center;
+    align-items: center;
+    margin-left: 50px;
+    margin-right: 20px;
+}
+h3{
+    font-size: 40px;
+    margin:30px ;
+    margin-left: 50px;
+    
+}
+.box-d{
+    
+    margin-top: 49px;
+    margin-left: 31px;
+    font-size: 19px;
+}
+.main-box{
+    display: flex;
+    flex-wrap: wrap;
+}
+ .innerdiv{
+    display: inline-block;
+    margin-left: 50px;
+ }
+ #time{
+    border: 2px solid grey;
+    border-radius: 10px;
+ }
+
+    </style>
+</head>
+<body>
+   <div class="side">
+    <div class="side-bar">hiii
+        <div class="sub-div">
+            </div></div>
+            <div class="page">
+                <div class="days">
+                    <h3>Days</h3>
+                </div>
+                <br>
+                <div class="main-box">
+                    <div class="box"><div><p class="box-d">Monday</p></div></div>
+                    <div class="box"><div><p class="box-d">Tuesday</p></div></div>
+                    <div class="box"><div><p class="box-d">Wednesday</p></div></div>
+                    <div class="box"><div><p class="box-d">Thursday</p></div></div>
+                    <div class="box"><div><p class="box-d">Friday</p></div></div>
+                </div>
+                <br>
+                <div class="sub-div2">
+                    <h3>Calender<span><hr></span></h3>
+                    <div class="innerdiv">
+                        <!-- calender -->
+                         <p>iadb</p>
+                    </div>
+                    <div class="innerdiv">
+                        <p>Monday , January 15</p>
+                        <p id="time">
+                            03:00 PM
+                        </p>
+                    </div>
+                </div>
+            </div>
+</body>
+</html>

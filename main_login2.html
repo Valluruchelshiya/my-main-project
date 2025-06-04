@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <title>ClassSync-</title>
+    <style>
+        body{
+            font-family: 'Montserrat', sans-serif;
+            background-color:white;
+            margin: 0%;
+            padding: 0%;
+            background-image: url("back.png");
+        }
+        #student{
+            height: 300px;
+            width:300px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        #admin{
+            height: 300px;
+            width: 300px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .images{
+           margin:80px;
+           margin-left: 220px;
+           display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 80px;
+        }
+        .nav{
+          justify-content: space-between;
+          /* margin-top: 10px; */
+          background-color: white;
+
+       }
+       .logoo{
+        display: flex;
+        padding-bottom: 5px;
+       }
+        #student:hover{
+            transform: scale(1.1);
+            box-shadow: 0 8px 16px #1493b6;
+        } #admin:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 16px rgba(233, 176, 6, 0.918);
+        }
+        /* #faculty:hover {
+            box-shadow: 0 8px 16px rgb(149, 234, 149);
+        } */
+        .image-text {
+            font-size: 38px;
+            color: #333;
+            margin-top: 22px;
+            margin-left: 50px;
+        }
+        .logo{
+            height: 100px;
+            width: auto;
+        }
+        .logo2{
+            height: 60px;
+            margin-top: 27px;
+        }
+        .moto{
+            margin-top: 60px;
+            margin-left: 600px;
+            font-family: cursive;
+            color: #12505fcf;
+            font-weight: bolder;
+            font-size: 15px;
+           
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="logoo">
+         <img src="logo1.jpg" alt="classsync" class="logo">
+         <img src="logo2.jpg" alt="" height="60px" class="logo2">
+
+         <p class="moto">ClassSync &nbsp; is  &nbsp;the  &nbsp;EdTech  &nbsp;Partner &nbsp; of &nbsp; Choice &nbsp; to  &nbsp;enhance  &nbsp;student  &nbsp;learning. </p>
+     </div></nav>
+    <div class="images">
+        <div class="image-container"> 
+            <a href="try.php">
+            <img src="studentlogo-removebg-preview.png" id="student">
+        </a>
+            <p class="image-text">Student Portal</p>
+        </div>
+        <div class="image-container">
+            <a href="mainadmin.html">
+            <img src="adminlogo-removebg-preview.png" id="admin">
+        </a>
+            <p class="image-text">Faculty Portal</p>
+        </div>
+        <div class="image-container">
+            <a href="dashboard.html">
+            <img src="admin-icon-png-18.jpg" id="admin">
+        </a>
+            <p class="image-text">Admin Portal</p>
+        </div>
+    </div>
+</body>
+</html>

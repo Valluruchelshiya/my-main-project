@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* your existing CSS styles here */
+    body {
+    width: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.container {
+    width: 100%;
+    max-width: 1000px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    margin-left: 350px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+h2 {
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color:  #1a1a2e;
+    color: white;
+}
+
+td {
+    background-color: #f9f9f9;
+}
+
+.charts {
+    height: 300px;
+    width: 600px;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+canvas {
+    width: 48%; /* Slightly reduced to make both graphs fit side by side */
+    height: 200px; /* Further reduced height for proper visibility */
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.sidebar {
+    width: 250px;
+    background-color: #1a1a2e;
+    color: white;
+    min-height: 100vh;
+    transition: width 0.3s ease;
+    overflow-x: hidden;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.sidebar.collapsed {
+    width: 70px;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.3s, color 0.3s;
+}
+
+.sidebar a i {
+    min-width: 30px;
+    font-size: 18px;
+}
+
+.sidebar a span {
+    transition: opacity 0.3s;
+}
+
+.sidebar.collapsed a span {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebar a:hover {
+    background-color: #16213e;
+    color: #e94560;
+}
+
+.toggle-btn {
+    padding: 10px 15px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    margin: 10px 15px;
+    width: calc(100% - 30px);
+    text-align: left;
+}
+
+.sidebar.collapsed ~ .toggle-btn {
+    left: 80px;
+}
+
+.content {
+    margin-left: 250px;
+    padding: 40px;
+    transition: margin-left 0.3s ease;
+    width: 100%;
+}
+
+.sidebar.collapsed ~ .content {
+    margin-left: 70px;
+}
+
+  </style>
+</head>
+<body>
+  <div class="sidebar" id="sidebar">
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <a href="/attendancestu?rollNo=22102A030"><i class="fa-solid fa-id-badge"></i><span> Attendance</span></a>
+        <a href="studentattendence.php"><i class="fa-solid fa-calendar-day"></i><span> Time Table</span></a>
+        <a href="student_result.php"><i class="fa-solid fa-print"></i><span> Examination</span></a>
+        <a href="student_announcements.php"><i class="fa-solid fa-microphone"></i><span> Announcements</span></a>
+        <a href="enroll.html"><i class="fa-solid fa-comments"></i><span>Code Room</span></a>
+        <a href="try.php"><i class="fa-solid fa-right-from-bracket"></i><span> Logout</span></a>
+    </div>
+
+  <div class="container">
+    <h1>Attendance Summary for Roll No: {{ roll_no }}</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Subject</th>
+          <th>Present</th>
+          <th>Absent</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in range(subjects|length) %}
+        <tr>
+          <td>{{ subjects[i] }}</td>
+          <td>{{ present_counts[i] }}</td>
+          <td>{{ absent_counts[i] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="charts">
+      <canvas id="attendanceChart"></canvas>
+      <canvas id="attendancePieChart"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const subjects = {{ subjects|tojson }};
+    const present = {{ present_counts|tojson }};
+    const absent = {{ absent_counts|tojson }};
+
+    const ctx = document.getElementById('attendanceChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: subjects,
+        datasets: [
+          {
+            label: 'Present',
+            data: present,
+            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'Absent',
+            data: absent,
+            backgroundColor: 'rgba(255, 99, 132, 0.6)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+
+    const pieCtx = document.getElementById('attendancePieChart').getContext('2d');
+    new Chart(pieCtx, {
+      type: 'pie',
+      data: {
+        labels: ['Total Present', 'Total Absent'],
+        datasets: [{
+          data: [
+            present.reduce((a, b) => a + b, 0),
+            absent.reduce((a, b) => a + b, 0)
+          ],
+          backgroundColor: ['#4CAF50', '#FF5733'],
+          borderWidth: 1
+        }]
+      }
+    });
+    function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+  </script>
+</body>
+</html>

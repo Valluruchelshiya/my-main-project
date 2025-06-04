@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Practice Coding Problems</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+    }
+    .sidebar {
+    width: 250px;
+    background-color: #1a1a2e;
+    color: white;
+    min-height: 100vh;
+    transition: width 0.3s ease;
+    overflow-x: hidden;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.sidebar.collapsed {
+    width: 70px;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.3s, color 0.3s;
+}
+
+.sidebar a i {
+    min-width: 30px;
+    font-size: 18px;
+}
+
+.sidebar a span {
+    transition: opacity 0.3s;
+}
+
+.sidebar.collapsed a span {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebar a:hover {
+    background-color: #16213e;
+    color: #e94560;
+}
+
+.toggle-btn {
+    padding: 10px 15px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    margin: 10px 15px;
+    width: calc(100% - 30px);
+    text-align: left;
+}
+
+
+.sidebar.collapsed ~ .toggle-btn {
+    left: 80px;
+}
+
+.content {
+    margin-left: 250px;
+    padding: 40px;
+    transition: margin-left 0.3s ease;
+    width: 100%;
+}
+
+.sidebar.collapsed ~ .content {
+    margin-left: 70px;
+}
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    h3 {
+      margin: 0 0 10px;
+    }
+    .level {
+      font-size: 0.8rem;
+      padding: 4px 8px;
+      border-radius: 4px;
+      color: white;
+      margin-left: 10px;
+    }
+    .easy { background-color: #4caf50; }
+    .medium { background-color: #ff9800; }
+    .hard { background-color: #f44336; }
+    a {
+      text-decoration: none;
+      color: #1976d2;
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar" id="sidebar">
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+         <a href="static/attendancestu.html"><i class="fa-solid fa-id-badge"></i><span> Attendance</span></a>
+        <a href="studentattendence.php"><i class="fa-solid fa-calendar-day"></i><span> Time Table</span></a>
+        <a href="student_result.php"><i class="fa-solid fa-print"></i><span> Examination</span></a>
+        <a href="student_announcements.php"><i class="fa-solid fa-microphone"></i><span> Announcements</span></a>
+        <a href="enroll.html"><i class="fa-solid fa-comments"></i><span>Code Room</span></a>
+        <a href="try.php"><i class="fa-solid fa-right-from-bracket"></i><span> Logout</span></a>
+    </div>
+  <div class="container">
+    <h1>💻 Practice Coding Problems</h1>
+    <ul id="problem-list"></ul>
+  </div>
+
+  <script>
+    const problems = [
+      {
+        id: 1,
+        title: "Reverse a String",
+        level: "Easy",
+        description: "Write a function that reverses a given string."
+      },
+      {
+        id: 2,
+        title: "Two Sum",
+        level: "Medium",
+        description: "Find two numbers in an array that add up to a target value."
+      },
+      {
+        id: 3,
+        title: "Palindrome Checker",
+        level: "Easy",
+        description: "Check whether a given string is a palindrome."
+      },
+      {
+        id: 4,
+        title: "Merge Sorted Arrays",
+        level: "Medium",
+        description: "Merge two sorted arrays into one sorted array."
+      },
+      {
+        id: 5,
+        title: "Longest Substring Without Repeating Characters",
+        level: "Hard",
+        description: "Find the longest substring without repeating characters."
+      }
+    ];
+
+    const list = document.getElementById("problem-list");
+
+    problems.forEach(problem => {
+      const item = document.createElement("li");
+      item.innerHTML = `
+        <h3>${problem.title} 
+          <span class="level ${problem.level.toLowerCase()}">${problem.level}</span>
+        </h3>
+        <p>${problem.description}</p>
+        <a href="solve.html?id=${problem.id}"> Solve this problem ➜</a>
+      `;
+      list.appendChild(item);
+    });
+  //   fetch('http://localhost:5000/api/problems')
+  // .then(response => response.json())
+  // .then(problems => {
+  //   // Dynamically generate problem list in the HTML
+  // });
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+  </script>
+</body>
+</html>

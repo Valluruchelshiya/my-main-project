@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upload & Schedule Content</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e6e3df, #d4d3cf);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .main {
+      /* margin-left: 250px; */
+      flex: 1;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+      padding: 30px;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .container:hover {
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #36454F;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    input, select, textarea, button {
+      width: 100%;
+      margin-bottom: 20px;
+      padding: 12px 14px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #fdfdfd;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #748cab;
+      box-shadow: 0 0 0 3px rgba(116, 140, 171, 0.2);
+      outline: none;
+      background-color: #fefefe;
+    }
+
+    label {
+      font-weight: 500;
+      margin-bottom: 6px;
+      display: block;
+      color: #4b4b4b;
+    }
+
+    button {
+      background:  rgb(223, 140, 44);
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background: #f1d063;
+    }
+  </style>
+</head>
+<body>
+  <div class="navigation">
+    <ul>
+      <li>
+        <a href="admindas.html">
+          <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+          <span class="title">Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a href="attendanceadmin.php">
+          <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
+          <span class="title">Attendance</span>
+        </a>
+      </li>
+      <li>
+        <a href="adminnotification.html">
+          <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
+          <span class="title">Notices</span>
+        </a>
+      </li>
+      <li>
+        <a href="adchat.php">
+          <span class="icon"><ion-icon name="help-outline"></ion-icon></span>
+          <span class="title">Doubts</span>
+        </a>
+      </li>
+      <li>
+        <a href="admin_result.php">
+          <span class="icon"><ion-icon name="clipboard-outline"></ion-icon></span>
+          <span class="title">Result</span>
+        </a>
+      </li>
+      <li>
+        <a href="admincalender.html">
+          <span class="icon"><ion-icon name="calendar-outline"></ion-icon></span>
+          <span class="title">TimeTable</span>
+        </a>
+      </li>
+      <li>
+        <a href="mainadmin.html">
+          <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+          <span class="title">Sign Out</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="main">
+    <div class="container">
+      <h2>Upload & Schedule Academic Content</h2>
+      <form id="uploadForm" action="upload.php" method="POST" enctype="multipart/form-data">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" required />
+
+        <label for="description">Description</label>
+        <textarea id="description" name="description" rows="4"></textarea>
+
+        <label for="contentType">Content Type</label>
+        <select id="contentType" name="contentType" onchange="updateAcceptType()">
+          <option value="pdf">PDF</option>
+          <option value="video">Video</option>
+          <option value="quiz">Quiz</option>
+        </select>
+
+        <label for="fileUpload">Upload File</label>
+        <input type="file" id="fileUpload" class="file-input" required />
+
+        <label for="schedule">Schedule Date</label>
+        <input type="date" id="schedule" name="schedule" required />
+
+        <button type="submit">Upload & Schedule</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function updateAcceptType() {
+      const type = document.getElementById("contentType").value;
+      const fileInput = document.getElementById("fileUpload");
+
+      if (type === "pdf") {
+        fileInput.accept = ".pdf";
+      } else if (type === "video") {
+        fileInput.accept = "video/*";
+      } else if (type === "quiz") {
+        fileInput.accept = ".csv,.json";
+      }
+    }
+
+    document.getElementById("uploadForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const title = document.getElementById("title").value;
+      const schedule = document.getElementById("schedule").value;
+      const file = document.getElementById("fileUpload").files[0];
+      if (file) {
+        alert(`"${title}" scheduled on ${schedule} and file "${file.name}" uploaded successfully!`);
+      } else {
+        alert("Please select a file.");
+      }
+    });
+
+    updateAcceptType();
+  </script>
+   <script src="main.js"></script>
+   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+</html>
